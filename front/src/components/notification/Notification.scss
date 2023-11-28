@@ -1,0 +1,46 @@
+.notification {
+  width: 350px;
+  padding: 15px;
+  position: fixed;
+  top: 20px;
+  left: calc(50vw - 175px);
+  z-index: 11;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
+  &.success {
+    .notification-head {
+      color: #1abc9c;
+    }
+  }
+
+  &.error {
+    .notification-head {
+      color: #e74c3c;
+    }
+  }
+
+  &.warning {
+    .notification-head {
+      color: #f39c12;
+    }
+  }
+
+  &-head {
+    font-family: Open sans medium;
+    font-size: 12px;
+  }
+
+  &-content {
+    font-size: 14px;
+    margin-top: 15px;
+  }
+
+  &-close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 10px;
+    width: 10px;
+    cursor: pointer;
+  }
+}

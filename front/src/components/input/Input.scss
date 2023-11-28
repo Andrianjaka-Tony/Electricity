@@ -1,0 +1,42 @@
+.input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 320px;
+  height: 45px;
+
+  label {
+    font-size: 12px;
+    transition: 200ms;
+    color: rgba(0, 0, 0, 0.7);
+    padding: 0 10px;
+
+    &.focus {
+      position: absolute;
+      top: 0%;
+      font-size: 10px;
+      transform: translateY(-50%);
+      background: white;
+      color: rgba(0, 0, 0, 1);
+      z-index: 2;
+    }
+  }
+
+  input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: transparent;
+    padding: 0 10px;
+    outline: none;
+    border: 2px rgba(0, 0, 0, 0.2) groove;
+    border-radius: 4px;
+    transition: 200ms;
+
+    &:focus {
+      border-color: black;
+    }
+  }
+}
