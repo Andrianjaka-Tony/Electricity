@@ -33,6 +33,7 @@ public class Subsector {
 
   @ManyToOne
   @JoinColumn(name = "_sector", referencedColumnName = "_id")
-  private Sector sector;
+  @Builder.Default
+  private Sector sector = Sector.builder().build();
 
 }

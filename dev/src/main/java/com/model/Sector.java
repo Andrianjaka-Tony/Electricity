@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.repository.SectorRepository;
 
 @Entity(name = "_sector")
 @Table(name = "_sector")
@@ -44,5 +45,9 @@ public class Sector {
   @JsonIgnore
   @Builder.Default
   private List<Subsector> subsectors = new ArrayList<>();
+
+  public Sector save(SectorRepository sectorRepository) {
+    return sectorRepository.save(this);
+  }
 
 }
