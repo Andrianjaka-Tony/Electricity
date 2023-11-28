@@ -4,8 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,8 +16,8 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.repository.SectorRepository;
+import com.repository.SubsectorRepository;
 
 @Entity(name = "_sector")
 @Table(name = "_sector")
@@ -41,13 +41,24 @@ public class Sector {
   @Column(name = "_battery", columnDefinition = "NUMERIC", nullable = false, updatable = true, unique = false)
   private Double battery;
 
-  @OneToMany(mappedBy = "sector")
-  @JsonIgnore
+  @Transient
   @Builder.Default
   private List<Subsector> subsectors = new ArrayList<>();
 
   public Sector save(SectorRepository sectorRepository) {
     return sectorRepository.save(this);
+  }
+
+  public static List<Sector> findAll(SectorRepository sectorRepository) {
+    return sectorRepository.findAll();
+  }
+
+  public static Sector findById(SectorRepository sectorRepository, Long id) {
+    return sectorRepository.findById(id).orElse(null);
+  }
+
+  public List<Subsector> findAllSubsectors(SubsectorRepository subsectorRepository) {
+    return subsectorRepository.findBySectorId(this.getId());
   }
 
 }

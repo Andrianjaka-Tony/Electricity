@@ -13,6 +13,10 @@ import lombok.NoArgsConstructor;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
+import java.util.List;
+
+import com.repository.SubsectorRepository;
+
 import jakarta.persistence.Column;
 
 @Entity(name = "_subsector")
@@ -35,5 +39,17 @@ public class Subsector {
   @JoinColumn(name = "_sector", referencedColumnName = "_id")
   @Builder.Default
   private Sector sector = Sector.builder().build();
+
+  public Subsector save(SubsectorRepository subsectorRepository) {
+    return subsectorRepository.save(this);
+  }
+
+  public static List<Subsector> findAll(SubsectorRepository subsectorRepository) {
+    return subsectorRepository.findAll();
+  }
+
+  public static Subsector findById(SubsectorRepository subsectorRepository, Long id) {
+    return subsectorRepository.findById(id).orElse(null);
+  }
 
 }
