@@ -27,6 +27,7 @@ public class SubsectorTest {
     Sector sector = Sector.findById(this.getSectorRepository(), sectorId);
     Subsector subsector = Subsector.builder()
         .name("S1 INFO")
+        .individualConsommation(Double.parseDouble("80"))
         .sector(sector)
         .build();
     System.out.println(subsector.save(this.getSubsectorRepository()));
@@ -40,7 +41,8 @@ public class SubsectorTest {
   @Test
   void findSubsectorById() {
     Long subsectorId = Long.parseLong("1");
-    System.out.println(Subsector.findById(this.getSubsectorRepository(), subsectorId));
+    System.out.println(
+        Subsector.findById(this.getSubsectorRepository(), subsectorId));
   }
 
 }

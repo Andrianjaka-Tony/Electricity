@@ -12,17 +12,10 @@ CREATE TABLE _sector (
 CREATE TABLE _subsector (
   _id INTEGER NOT NULL,
   _name VARCHAR NOT NULL,
+  _individual_consommation NUMERIC NOT NULL,
   _sector INTEGER NOT NULL,
   PRIMARY KEY (_id),
-  FOREIGN KEY (_sector) REFERENCES _sector(_id) 
-);
-
-CREATE TABLE _individual_consommation (
-  _id INTEGER NOT NULL,
-  _subsector INTEGER NOT NULL,
-  _value NUMERIC NOT NULL,
-  PRIMARY KEY (_id),
-  FOREIGN KEY (_subsector) REFERENCES _subsector(_id)
+  FOREIGN KEY (_sector) REFERENCES _sector(_id)
 );
 
 CREATE TABLE _period (

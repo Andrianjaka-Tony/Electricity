@@ -35,13 +35,16 @@ public class Subsector {
   @Column(name = "_name", columnDefinition = "VARCHAR", nullable = false, updatable = true, unique = false)
   private String name;
 
+  @Column(name = "_individual_consommation", columnDefinition = "NUMERIC", nullable = false, updatable = true, unique = false)
+  private Double individualConsommation;
+
   @ManyToOne
   @JoinColumn(name = "_sector", referencedColumnName = "_id")
-  @Builder.Default
-  private Sector sector = Sector.builder().build();
+  private Sector sector;
 
   public Subsector save(SubsectorRepository subsectorRepository) {
-    return subsectorRepository.save(this);
+    Subsector response = subsectorRepository.save(this);
+    return response;
   }
 
   public static List<Subsector> findAll(SubsectorRepository subsectorRepository) {
@@ -49,7 +52,8 @@ public class Subsector {
   }
 
   public static Subsector findById(SubsectorRepository subsectorRepository, Long id) {
-    return subsectorRepository.findById(id).orElse(null);
+    Subsector response = subsectorRepository.findById(id).orElse(null);
+    return response;
   }
 
 }
