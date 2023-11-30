@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import lombok.AllArgsConstructor;
@@ -30,7 +31,8 @@ import com.repository.AttendanceRepository;
 public class Attendance {
 
   @Id
-  @GeneratedValue(strategy = SEQUENCE)
+  @SequenceGenerator(name = "_attendance_sequence", sequenceName = "_attendance_sequence", allocationSize = 1)
+  @GeneratedValue(strategy = SEQUENCE, generator = "_attendance_sequence")
   @Column(name = "_id", columnDefinition = "INTEGER", nullable = false, updatable = false, unique = true)
   private Long id;
 

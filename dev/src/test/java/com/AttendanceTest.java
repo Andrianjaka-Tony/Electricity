@@ -32,7 +32,7 @@ public class AttendanceTest {
   void save() {
     Subsector subsector = Subsector
         .builder()
-        .id(Long.parseLong("552"))
+        .id(Long.parseLong("1"))
         .build();
     Period period = Period
         .builder()
@@ -40,8 +40,8 @@ public class AttendanceTest {
         .build();
     Attendance attendance = new Attendance(
         null,
-        120,
-        new Date(System.currentTimeMillis()),
+        20,
+        new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7),
         subsector,
         period);
     System.out.println(attendance.save(this.getAttendanceRepository()));

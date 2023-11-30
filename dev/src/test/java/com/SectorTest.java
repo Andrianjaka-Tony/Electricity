@@ -24,8 +24,8 @@ public class SectorTest {
   void saveSector() {
     Sector sector = Sector.builder()
         .name("North sector")
-        .power(15000.0)
-        .battery(5000.0)
+        .power(30000.0)
+        .battery(10000.0)
         .build();
     System.out.println(sector.save(this.getSectorRepository()));
   }

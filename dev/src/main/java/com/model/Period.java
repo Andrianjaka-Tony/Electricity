@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
@@ -28,7 +29,8 @@ import com.repository.TimeSlotRepository;
 public class Period {
 
   @Id
-  @GeneratedValue(strategy = SEQUENCE)
+  @SequenceGenerator(name = "_period_sequence", sequenceName = "_period_sequence", allocationSize = 1)
+  @GeneratedValue(strategy = SEQUENCE, generator = "_period_sequence")
   @Column(name = "_id", columnDefinition = "INTEGER", nullable = false, updatable = false, unique = true)
   private Long id;
 

@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,7 +28,8 @@ import com.repository.TimeSlotRepository;
 public class TimeSlot {
 
   @Id
-  @GeneratedValue(strategy = SEQUENCE)
+  @SequenceGenerator(name = "_time_slot_sequence", sequenceName = "_time_slot_sequence", allocationSize = 1)
+  @GeneratedValue(strategy = SEQUENCE, generator = "_time_slot_sequence")
   @Column(name = "_id", columnDefinition = "INTEGER", nullable = false, updatable = false, unique = true)
   private Long id;
 

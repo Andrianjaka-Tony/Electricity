@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +33,8 @@ import jakarta.persistence.Column;
 public class Subsector {
 
   @Id
-  @GeneratedValue(strategy = SEQUENCE)
+  @SequenceGenerator(name = "_subsector_sequence", sequenceName = "_subsector_sequence", allocationSize = 1)
+  @GeneratedValue(strategy = SEQUENCE, generator = "_subsector_sequence")
   @Column(name = "_id", columnDefinition = "INTEGER", nullable = false, updatable = false, unique = true)
   private Long id;
 
@@ -65,6 +68,10 @@ public class Subsector {
 
   public List<Attendance> findAllAttendances(AttendanceRepository attendanceRepository) {
     return attendanceRepository.findBySubsectorId(this.getId());
+  }
+
+  public Double getAvgAttendance(SubsectorRepository subsectorRepository, Period period, Date date) {
+    return subsectorRepository.getAvgAttendance(this.getId(), period.getId(), date).orElse(0.0);
   }
 
 }
