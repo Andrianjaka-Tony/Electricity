@@ -47,4 +47,8 @@ public class Period {
     return TimeSlot.findByPeriodId(timeSlotRepository, this.getId());
   }
 
+  public static Period findById(PeriodRepository periodRepository, Long id) {
+    return periodRepository.findById(id).orElse(null);
+  }
+
 }

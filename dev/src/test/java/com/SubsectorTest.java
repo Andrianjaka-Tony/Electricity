@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.model.Sector;
 import com.model.Subsector;
+import com.repository.AttendanceRepository;
 import com.repository.SectorRepository;
 import com.repository.SubsectorRepository;
 
@@ -20,6 +21,9 @@ public class SubsectorTest {
 
   @Autowired
   private SectorRepository sectorRepository;
+
+  @Autowired
+  private AttendanceRepository attendanceRepository;
 
   @Test
   void saveSubsector() {
@@ -43,6 +47,13 @@ public class SubsectorTest {
     Long subsectorId = Long.parseLong("1");
     System.out.println(
         Subsector.findById(this.getSubsectorRepository(), subsectorId));
+  }
+
+  @Test
+  void findAllAttendancesById() {
+    Long subsectorId = Long.parseLong("552");
+    Subsector subsector = Subsector.findById(this.getSubsectorRepository(), subsectorId);
+    System.out.println(subsector.findAllAttendances(this.getAttendanceRepository()));
   }
 
 }

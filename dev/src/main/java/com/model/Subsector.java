@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,8 +14,10 @@ import lombok.NoArgsConstructor;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.repository.AttendanceRepository;
 import com.repository.SubsectorRepository;
 
 import jakarta.persistence.Column;
@@ -42,6 +45,10 @@ public class Subsector {
   @JoinColumn(name = "_sector", referencedColumnName = "_id")
   private Sector sector;
 
+  @Transient
+  @Builder.Default
+  private List<Attendance> attendances = new ArrayList();
+
   public Subsector save(SubsectorRepository subsectorRepository) {
     Subsector response = subsectorRepository.save(this);
     return response;
@@ -54,6 +61,10 @@ public class Subsector {
   public static Subsector findById(SubsectorRepository subsectorRepository, Long id) {
     Subsector response = subsectorRepository.findById(id).orElse(null);
     return response;
+  }
+
+  public List<Attendance> findAllAttendances(AttendanceRepository attendanceRepository) {
+    return attendanceRepository.findBySubsectorId(this.getId());
   }
 
 }

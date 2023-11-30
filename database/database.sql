@@ -53,10 +53,12 @@ VALUES
 CREATE TABLE _attendance (
   _id INTEGER NOT NULL,
   _subsector INTEGER NOT NULL,
+  _period INTEGER NOT NULL,
   _number INTEGER NOT NULL,
   _date DATE NOT NULL,
   PRIMARY KEY (_id),
-  FOREIGN KEY (_subsector) REFERENCES _subsector(_id)
+  FOREIGN KEY (_subsector) REFERENCES _subsector(_id),
+  FOREIGN KEY (_period) REFERENCES _period(_id)
 );
 
 CREATE TABLE _light_intensity (
