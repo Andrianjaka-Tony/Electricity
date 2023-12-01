@@ -74,4 +74,17 @@ public class Subsector {
     return subsectorRepository.getAvgAttendance(this.getId(), period.getId(), date).orElse(0.0);
   }
 
+  public Double[] getAttendancesAvg(SubsectorRepository subsectorRepository, Date date) {
+    Double[] response = new Double[2];
+    Period am = Period.builder().id(Long.parseLong("1")).build();
+    Period pm = Period.builder().id(Long.parseLong("2")).build();
+    response[0] = subsectorRepository.getAvgAttendance(this.getId(), am.getId(), date).orElse(0.0);
+    response[1] = subsectorRepository.getAvgAttendance(this.getId(), pm.getId(), date).orElse(0.0);
+    return response;
+  }
+
+  public Double getConsommationPerHour(Double personNumber) {
+    return this.getIndividualConsommation() * personNumber;
+  }
+
 }

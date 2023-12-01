@@ -67,4 +67,14 @@ public class SubsectorTest {
     System.out.println(subsector.getAvgAttendance(this.getSubsectorRepository(), period, date));
   }
 
+  @Test
+  void getAttendancesAvg() {
+    Subsector subsector = Subsector.builder().id(Long.parseLong("1")).build();
+    Date date = new Date(System.currentTimeMillis());
+    Double[] attendances = subsector.getAttendancesAvg(this.getSubsectorRepository(), date);
+    System.out.println(
+        "AM avg: " + attendances[0] + "\n" +
+            "PM avg: " + attendances[1]);
+  }
+
 }
