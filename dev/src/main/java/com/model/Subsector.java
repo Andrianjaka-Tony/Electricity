@@ -52,6 +52,10 @@ public class Subsector {
   @Builder.Default
   private List<Attendance> attendances = new ArrayList();
 
+  @Transient
+  @Builder.Default
+  private Double[] avgAttendances = new Double[2];
+
   public Subsector save(SubsectorRepository subsectorRepository) {
     Subsector response = subsectorRepository.save(this);
     return response;
@@ -83,8 +87,20 @@ public class Subsector {
     return response;
   }
 
+  public void syncAvgAttendances(SubsectorRepository subsectorRepository, Date date) {
+    this.setAvgAttendances(this.getAttendancesAvg(subsectorRepository, date));
+  }
+
   public Double getConsommationPerHour(Double personNumber) {
     return this.getIndividualConsommation() * personNumber;
+  }
+
+  public Double getMorningConsommationPerHour() {
+    return this.getConsommationPerHour(this.getAvgAttendances()[0]);
+  }
+
+  public Double getAfternoonConsommationPerHour() {
+    return this.getConsommationPerHour(this.getAvgAttendances()[1]);
   }
 
 }

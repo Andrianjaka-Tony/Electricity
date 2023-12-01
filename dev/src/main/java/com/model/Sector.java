@@ -63,4 +63,78 @@ public class Sector {
     return subsectorRepository.findBySectorId(this.getId());
   }
 
+  public Double getMorningConsommationPerHour() {
+    Double response = 0.0;
+    for (Subsector subsector : subsectors) {
+      response += subsector.getMorningConsommationPerHour();
+    }
+    return response;
+  }
+
+  public Double getAfternoonConsommationPerHour() {
+    Double response = 0.0;
+    for (Subsector subsector : subsectors) {
+      response += subsector.getAfternoonConsommationPerHour();
+    }
+    return response;
+  }
+
+  public Double power(LightIntensity lightIntensity) {
+    return this.getPower() * lightIntensity.getValue();
+  }
+
+  public void checkPowerCut(List<Double> list, LightIntensity lightIntensity, double consommation,
+      double batteryAccumulator) {
+    double power = this.power(lightIntensity);
+    if (power < consommation) {
+      double powerToTake = consommation - power;
+      if ((batteryAccumulator + powerToTake) * 2 > this.getBattery()) {
+        double usableBattery = this.getBattery() / 2 - batteryAccumulator;
+        double ratio = (usableBattery + power) / consommation;
+        batteryAccumulator += usableBattery;
+        list.add(ratio + lightIntensity.getTimeSlot().getBegin());
+      } else {
+        batteryAccumulator += powerToTake;
+      }
+    }
+  }
+
+  public List<Double> powerCuts(List<LightIntensity> lightIntensities) {
+    List<Double> response = new ArrayList<>();
+    double batteryAccumulator = 0.0;
+    double morningConsommation = this.getMorningConsommationPerHour();
+    double afternoonConsommation = this.getAfternoonConsommationPerHour();
+    for (LightIntensity lightIntensity : lightIntensities) {
+      if (lightIntensity.getTimeSlot().getPeriod().getId().toString().equals("1")) {
+        // if (power < morningConsommation) {
+        // double powerToTake = morningConsommation - power;
+        // if ((batteryAccumulator + powerToTake) * 2 > this.getBattery()) {
+        // double usableBattery = this.getBattery() / 2 - batteryAccumulator;
+        // double ratio = (usableBattery + power) / morningConsommation;
+        // batteryAccumulator += usableBattery;
+        // response.add(ratio + lightIntensity.getTimeSlot().getBegin());
+        // } else {
+        // batteryAccumulator += powerToTake;
+        // }
+        // }
+        this.checkPowerCut(response, lightIntensity, morningConsommation, batteryAccumulator);
+      } else {
+        // if (power < afternoonConsommation) {
+        // double powerToTake = afternoonConsommation - power;
+        // if ((batteryAccumulator + powerToTake) * 2 > this.getBattery()) {
+        // double usableBattery = this.getBattery() / 2 - batteryAccumulator;
+        // double ratio = (usableBattery + power) / afternoonConsommation;
+        // batteryAccumulator += usableBattery;
+        // response.add(ratio + lightIntensity.getTimeSlot().getBegin());
+        // } else {
+        // batteryAccumulator += powerToTake;
+        // }
+        // }
+        this.checkPowerCut(response, lightIntensity, afternoonConsommation, batteryAccumulator);
+      }
+    }
+
+    return response;
+  }
+
 }
